@@ -20,6 +20,8 @@ editorIn( function( error, result ){
 });
 ```
 
+![Editor In](http://storage.j0.hn/editor-in.gif)
+
 ## API
 
 This module exports a single function
@@ -31,9 +33,10 @@ Opens a temporary file in `options.editor` or `process.env.EDITOR` and returns t
 __Options:__
 
 ```javascript
+// Options and defaults
 {
   // Editor to use Ex: 'vim'
-  editor:         process.env.EDITOR
+  editor:         process.env.EDITOR || 'vi'
   // Prefix of tmp filename Ex: 'some-file-'
 , tmpFilePrefix:  ''
   // Suffix of tmp filename Ex: '.md'
