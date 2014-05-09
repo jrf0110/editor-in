@@ -1,7 +1,7 @@
 var editorIn = require('./');
 
 editorIn({
-  editor: 'vim'
+  editor: process.argv[2] || 'vim'
 , tmpFilePrefix: 'poop'
 , tmpFilePostfix: '.markdown'
 }, function( error, result ){
