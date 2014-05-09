@@ -3,7 +3,7 @@ var editorIn = require('./');
 editorIn({
   editor: 'vim'
 , tmpFilePrefix: 'poop'
-, tmpFilePostfix: '.md'
+, tmpFilePostfix: '.markdown'
 }, function( error, result ){
   console.log( result.toString() );
 });
