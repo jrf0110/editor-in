@@ -39,7 +39,18 @@ module.exports = function( options, callback ){
     );
 
     editor.on( 'exit', function( code ){
-      fs.readFile( fpath, callback );
+      if ( code > 0 ) return callback( null, new Buffer() );
+
+      fs.readFile( fpath, function( error, result ){
+        if ( error ) return callback( error );
+
+        // Result always has a trailing '\n'
+        if ( result.length > 0 ){
+          result.length = result.length - 1;
+        }
+
+        return callback( null, result );
+      });
     });
   });
 };
