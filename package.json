@@ -1,6 +1,6 @@
 {
   "name": "editor-in",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Opens an editor, gets the result after the process has exited",
   "main": "index.js",
   "scripts": {
