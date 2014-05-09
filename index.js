@@ -4,9 +4,10 @@ var tmp     = require('tmp');
 
 module.exports = function( options, callback ){
   var defaults = {
-    tmpFilePrefix:   ''
-  , tmpFilePostfix:  ''
-  , editor:   'vi'
+    tmpFilePrefix:    ''
+  , tmpFilePostfix:   ''
+  , editor:           'vi'
+  , content:          ''
   };
 
   if ( typeof options === 'function' ){
@@ -32,24 +33,35 @@ module.exports = function( options, callback ){
   tmp.file( toptions, function( error, fpath ){
     if ( error ) return callback( error );
 
-    var editor = child.spawn(
-      options.editor || process.env.EDITOR
-    , [ fpath ]
-    , { stdio: 'inherit' }
-    );
+    // Write initial content
+    (function( next ){
+      if ( !options.content ) return next();
 
-    editor.on( 'exit', function( code ){
-      if ( code > 0 ) return callback( null, new Buffer() );
-
-      fs.readFile( fpath, function( error, result ){
+      fs.writeFile( fpath, options.content, function( error ){
         if ( error ) return callback( error );
 
-        // Result always has a trailing '\n'
-        if ( result.length > 0 ){
-          result.length = result.length - 1;
-        }
+        next();
+      });
+    })( function(){
+      var editor = child.spawn(
+        options.editor || process.env.EDITOR
+      , [ fpath ]
+      , { stdio: 'inherit' }
+      );
 
-        return callback( null, result );
+      editor.on( 'exit', function( code ){
+        if ( code > 0 ) return callback( null, new Buffer() );
+
+        fs.readFile( fpath, function( error, result ){
+          if ( error ) return callback( error );
+
+          // Result always has a trailing '\n'
+          if ( result.length > 0 ){
+            result.length = result.length - 1;
+          }
+
+          return callback( null, result );
+        });
       });
     });
   });

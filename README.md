@@ -37,6 +37,8 @@ __Options:__
 {
   // Editor to use Ex: 'vim'
   editor:         process.env.EDITOR || 'vi'
+  // Initial content for the editor
+, content:        ''
   // Prefix of tmp filename Ex: 'some-file-'
 , tmpFilePrefix:  ''
   // Suffix of tmp filename Ex: '.md'
