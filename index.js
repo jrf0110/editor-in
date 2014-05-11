@@ -56,9 +56,9 @@ module.exports = function( options, callback ){
           if ( error ) return callback( error );
 
           // Result always has a trailing '\n'
-          if ( result.length > 0 ){
-            result.length = result.length - 1;
-          }
+          // if ( result.length > 0 ){
+          //   result.length = result.length - 1;
+          // }
 
           return callback( null, result );
         });
